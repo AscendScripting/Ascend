@@ -1,11 +1,6 @@
 -- [ Ascend ] --
 -- [ v1.0.0 ] --
-getgenv().AC_VERSION = "1.0.1-Alpha"
-local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
-
-repeat
-  wait()
-until game:IsLoaded() and game.Players.LocalPlayer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/base.lua"))()
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex

@@ -1,6 +1,6 @@
 -- [ Ascend ] --
--- [ v1.0.0 ] --
-getgenv().AC_VERSION = "1.0.1-Alpha"
+-- [ v1.0.2 ] --
+getgenv().AC_VERSION = "1.0.2-Alpha"
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
 
 print("Ascending from hell... | v" .. getgenv().AC_VERSION)
@@ -176,7 +176,7 @@ Base:Button{
     GUI:Notification{
       Title = "Ascend",
       Text = "Ascend will be destroyed.",
-      Duration = 3,
+      Duration = 2,
       Callback = function()
         for i, v in pairs(CoreGUI:GetDescendants()) do
           if v.Name == getgenv().MC_NAME then
@@ -209,7 +209,7 @@ Base:Button{
 }
 
 -- [ Local Tab ] --
-Base:Toggle{
+Local:Toggle{
   Name = "Antikick",
   Description = "Prevents you from getting kicked",
   StartingState = false,

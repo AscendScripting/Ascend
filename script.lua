@@ -55,10 +55,10 @@ local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.Place
 local Noclip = nil
 local Clip = nil
 local player = Players.LocalPlayer
-if not playing == "Phantom Forces" then
-  local walkspeed = player.Character.Humanoid.WalkSpeed
-  local jumppower = player.Character.Humanoid.JumpPower
-  local hipheight = player.Character.Humanoid.HipHeight
+if playing ~= "Phantom Forces" then
+  local walkspeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
+  local jumppower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
+  local hipheight = game.Players.LocalPlayer.Character.Humanoid.HipHeight
 end
 
 -- [ Instances ] --
@@ -77,9 +77,8 @@ FOVCircle.Thickness = AimbotSettings.CircleThickness
 
 -- [ Events ] --
 RunService.RenderStepped:Connect(function()
-  player.Character.Humanoid.WalkSpeed = walkspeed
-  player.Character.Humanoid.HipHeight = hipheight
-  player.Character.Humanoid.JumpPower = jumppower
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
+  game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumppower
 
   FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
   FOVCircle.Radius = AimbotSettings.CircleRadius
@@ -254,11 +253,11 @@ Local:Button{
     }
   end
 }
-if not playing == "Phantom Forces" then
+if playing ~= "Phantom Forces" then
   Local:Slider{
     Name = "WalkSpeed",
     Description = "Changes your walkspeed",
-    Default = walkspeed,
+    Default = 16,
     Min = 16,
     Max = 500,
     Callback = function(value)
@@ -269,8 +268,8 @@ if not playing == "Phantom Forces" then
   Local:Slider{
     Name = "JumpPower",
     Description = "Changes your jumppower",
-    Default = jumppower,
-    Min = 50,
+    Default = 50,
+    Min = 20,
     Max = 500,
     Callback = function(value)
       player.Character.Humanoid.JumpPower = value
@@ -280,7 +279,7 @@ if not playing == "Phantom Forces" then
   Local:Slider{
     Name = "HipHeight",
     Description = "Changes your hipheight",
-    Default = hipheight,
+    Default = 2,
     Min = 2,
     Max = 300,
     Callback = function(value)

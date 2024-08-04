@@ -1,6 +1,13 @@
 -- [ Ascend ] --
 -- [ v1.0.0 ] --
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/base.lua"))()
+getgenv().AC_VERSION = "1.0.1-Alpha"
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
+
+print("Ascending from hell... | v" .. getgenv().AC_VERSION)
+
+repeat
+  wait()
+until game:IsLoaded() and game.Players.LocalPlayer
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex
@@ -70,19 +77,19 @@ FOVCircle.Thickness = AimbotSettings.CircleThickness
 
 -- [ Events ] --
 RunService.RenderStepped:Connect(function()
-  player.Character.Humanoid.Walkspeed = walkspeed
+  player.Character.Humanoid.WalkSpeed = walkspeed
   player.Character.Humanoid.HipHeight = hipheight
   player.Character.Humanoid.JumpPower = jumppower
 
   FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
   FOVCircle.Radius = AimbotSettings.CircleRadius
-  FOVCircle.Filled = Aimbot.CircleFilled
-  FOVCircle.Color = Aimbot.CircleColor
-  FOVCircle.Visible = Aimbot.CircleVisible
-  FOVCircle.Radius = Aimbot.CircleRadius
-  FOVCircle.Transparency = Aimbot.CircleTransparency
-  FOVCircle.NumSides = Aimbot.CircleSides
-  FOVCircle.Thickness = Aimbot.CircleThickness
+  FOVCircle.Filled = AimbotSettings.CircleFilled
+  FOVCircle.Color = AimbotSettings.CircleColor
+  FOVCircle.Visible = AimbotSettings.CircleVisible
+  FOVCircle.Radius = AimbotSettings.CircleRadius
+  FOVCircle.Transparency = AimbotSettings.CircleTransparency
+  FOVCircle.NumSides = AimbotSettings.CircleSides
+  FOVCircle.Thickness = AimbotSettings.CircleThickness
 end)
 
 -- [ Functions ] --

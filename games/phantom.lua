@@ -1,5 +1,6 @@
 -- Thanks to dementiaenjoyer for the Homohack script.
 -- [ Variables / Services ] --
+getgenv().AC_PHANTOMLOADED = true
 local players = workspace.Players
 local run_service = game:GetService("RunService")
 local teams = game:GetService("Teams")
@@ -57,7 +58,7 @@ run_service.RenderStepped:Connect(function(delta)
     for _, player in get_players() do
       if not player:FindFirstChildWhichIsA("Highlight") then
         local is_ally, team = is_ally(player)
-  
+
         if (features.chams.teamcheck and not is_ally) or not features.chams.teamcheck then
           local highlight = Instance.new("Highlight", player)
           highlight.FillColor = features.chams.color.fill

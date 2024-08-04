@@ -1,6 +1,6 @@
 -- [ Ascend ] --
 -- [ v1.0.0 ] --
-getgenv().AC_VERSION = "1.0.0-Alpha"
+getgenv().AC_VERSION = "1.0.1-Alpha"
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
 
 repeat
@@ -30,6 +30,10 @@ setreadonly(gmt, false)
 local oldNamecall = gmt.__namecall
 
 -- [ Game Recognition ] --
+local playing = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+if game.GameId == 113491250 then
+  playing = "Phantom Forces"
+end
 
 -- [ Developer Mode ] --
 if getgenv().AC_DEV then
@@ -49,7 +53,7 @@ local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.Place
 local Noclip = nil
 local Clip = nil
 local player = Players.LocalPlayer
-if not game.PlaceId == 113491250 then
+if not playing == "Phantom Forces" then
   local walkspeed = player.Character.Humanoid.WalkSpeed
   local jumppower = player.Character.Humanoid.JumpPower
   local hipheight = player.Character.Humanoid.HipHeight
@@ -171,7 +175,7 @@ Base:Button{
     GUI:Notification{
       Title = "Ascend",
       Text = "Ascend will be destroyed.",
-      Duration = 5,
+      Duration = 3,
       Callback = function()
         for i, v in pairs(CoreGUI:GetDescendants()) do
           if v.Name == getgenv().MC_NAME then
@@ -248,7 +252,7 @@ Local:Button{
     }
   end
 }
-if not game.PlaceId == 113491250 then
+if not playing == "Phantom Forces" then
   Local:Slider{
     Name = "WalkSpeed",
     Description = "Changes your walkspeed",
@@ -324,13 +328,13 @@ Combat:Toggle{
 }
 
 -- [ Specifical Games ] --
-if game.PlaceId == 113491250 then -- Phantom Forces
+if playing == "Phantom Forces" then
   local start = nil
   local handled = false
 
-  GUI:Prompt{
+  GUI:prompt{
     Title = "Phantom Forces",
-    Description = "You are playing Phantom Forces, would you like to enable our Phantom Forces ESP?",
+    Text = "You are playing Phantom Forces, would you like to enable Ascend's Phantom Forces Script?",
     Followup = false,
     Buttons = {
       yes = function()
@@ -362,7 +366,9 @@ if game.PlaceId == 113491250 then -- Phantom Forces
     Callback = function(state)
       if state then
         getgenv().AC_PHANTOMESP = true
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/games/phantom.lua"))()
+        if not getgenv().AC_PHANTOMLOADED then
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/games/phantom.lua"))()
+        end
       else
         getgenv().AC_PHANTOMESP = false
         for _, player in get_players() do

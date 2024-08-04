@@ -1,9 +1,11 @@
 -- [ Ascend ] --
 -- [ v1.0.0 ] --
+getgenv().AC_VERSION = "1.0.0-Alpha"
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
+
 repeat
   wait()
-until game:IsLoaded()
+until game:IsLoaded() and game.Players.LocalPlayer
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex
@@ -18,17 +20,9 @@ local AimbotSettings = {
   CircleTransparency = 0.5,
   CircleRadius = 120,
   CircleFilled = false,
-  CircleVisible = true,
+  CircleVisible = false,
   CircleThickness = 1
 }
-
--- [ Locals ] --
-local Noclip = nil
-local Clip = nil
-local player = game.Players.LocalPlayer
-local walkspeed = player.Character.Humanoid.WalkSpeed
-local jumppower = player.Character.Humanoid.JumpPower
-local hipheight = player.Character.Humanoid.HipHeight
 
 -- [ GMT ] --
 local gmt = getrawmetatable(game)
@@ -36,7 +30,6 @@ setreadonly(gmt, false)
 local oldNamecall = gmt.__namecall
 
 -- [ Game Recognition ] --
-local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceID).Name
 
 -- [ Developer Mode ] --
 if getgenv().AC_DEV then
@@ -51,6 +44,17 @@ local TweenService = game:GetService("TweenService")
 local CoreGUI = game.CoreGui
 local Camera = workspace.CurrentCamera
 
+-- [ Locals ] --
+local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local Noclip = nil
+local Clip = nil
+local player = Players.LocalPlayer
+if not game.PlaceId == 113491250 then
+  local walkspeed = player.Character.Humanoid.WalkSpeed
+  local jumppower = player.Character.Humanoid.JumpPower
+  local hipheight = player.Character.Humanoid.HipHeight
+end
+
 -- [ Instances ] --
 local FOVCircle = Drawing.new("Circle")
 
@@ -64,8 +68,6 @@ FOVCircle.Radius = AimbotSettings.CircleRadius
 FOVCircle.Transparency = AimbotSettings.CircleTransparency
 FOVCircle.NumSides = AimbotSettings.CircleSides
 FOVCircle.Thickness = AimbotSettings.CircleThickness
-
--- [ Anticheat Bypasses ] --
 
 -- [ Events ] --
 RunService.RenderStepped:Connect(function()
@@ -114,7 +116,7 @@ end
 local GUI = Lib:Create{
   Name = "Ascend",
   Size = UDim2.fromOffset(600, 400),
-  Theme = Lib.Themes.Serika,
+  Theme = Lib.Themes.Legacy,
   Link = "https://github.com/AscendScripting/Ascend"
 }
 getgenv().AC_GUI = GUI
@@ -202,13 +204,6 @@ Base:Button{
 }
 
 -- [ Local Tab ] --
--- Local:Button{
---   Name = "Btools",
---   Description = "Equip building tools",
---   Callback = function()
---     getgenv().AC_BTOOLS = true
---   end
--- }
 Base:Toggle{
   Name = "Antikick",
   Description = "Prevents you from getting kicked",
@@ -232,7 +227,7 @@ Local:Button{
     GUI:Notification{
       Title = "Ascend",
       Text = "Rejoining the game.",
-      Duration = 5,
+      Duration = 2,
       Callback = function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId)
       end
@@ -246,46 +241,60 @@ Local:Button{
     GUI:Notification{
       Title = "Ascend",
       Text = "Serverhopping.",
-      Duration = 5,
+      Duration = 2,
       Callback = function()
         hop:Teleport(game.PlaceId)
       end
     }
   end
 }
-Local:Slider{
-  Name = "WalkSpeed",
-  Description = "Changes your walkspeed",
-  Default = 16,
-  Min = 16,
-  Max = 500,
-  Callback = function(value)
-    player.Character.Humanoid.WalkSpeed = value
-    walkspeed = value
-  end
-}
-Local:Slider{
-  Name = "JumpPower",
-  Description = "Changes your jumppower",
-  Default = 50,
-  Min = 50,
-  Max = 500,
-  Callback = function(value)
-    player.Character.Humanoid.JumpPower = value
-    jumppower = value
-  end
-}
-Local:Slider{
-  Name = "HipHeight",
-  Description = "Changes your hipheight",
-  Default = 0,
-  Min = 0,
-  Max = 500,
-  Callback = function(value)
-    player.Character.Humanoid.HipHeight = value
-    hipheight = value
-  end
-}
+if not game.PlaceId == 113491250 then
+  Local:Slider{
+    Name = "WalkSpeed",
+    Description = "Changes your walkspeed",
+    Default = walkspeed,
+    Min = 16,
+    Max = 500,
+    Callback = function(value)
+      player.Character.Humanoid.WalkSpeed = value
+      walkspeed = value
+    end
+  }
+  Local:Slider{
+    Name = "JumpPower",
+    Description = "Changes your jumppower",
+    Default = jumppower,
+    Min = 50,
+    Max = 500,
+    Callback = function(value)
+      player.Character.Humanoid.JumpPower = value
+      jumppower = value
+    end
+  }
+  Local:Slider{
+    Name = "HipHeight",
+    Description = "Changes your hipheight",
+    Default = hipheight,
+    Min = 2,
+    Max = 300,
+    Callback = function(value)
+      player.Character.Humanoid.HipHeight = value
+      hipheight = value
+    end
+  }
+  Local:Toggle{
+    Name = "Noclip",
+    StartingState = false,
+    Description = "Allows you to noclip through walls",
+    Callback = function(state)
+      if state then
+        noclip()
+      else
+        clip()
+      end
+    end
+  }
+end
 Local:Slider{
   Name = "FOV",
   Description = "Changes your FOV",
@@ -294,18 +303,6 @@ Local:Slider{
   Max = 120,
   Callback = function(value)
     game.Workspace.CurrentCamera.FieldOfView = value
-  end
-}
-Local:Toggle{
-  Name = "Noclip",
-  StartingState = false,
-  Description = "Allows you to noclip through walls",
-  Callback = function(state)
-    if state then
-      noclip()
-    else
-      clip()
-    end
   end
 }
 

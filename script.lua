@@ -1,7 +1,7 @@
 -- [ Ascend ] --
 -- [ v1.0.2 ] --
 getgenv().AC_VERSION = "1.0.3-Alpha"
-local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/AscendUI/main/script.lua"))()
 
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Ascending from hell...")
 repeat

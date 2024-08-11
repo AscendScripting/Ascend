@@ -1,13 +1,14 @@
 -- [ Ascend ] --
 -- [ v1.0.2 ] --
-getgenv().AC_VERSION = "1.0.2-Alpha"
+getgenv().AC_VERSION = "1.0.3-Alpha"
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Mercury/main/script.lua"))()
 
-print("Ascending from hell... | v" .. getgenv().AC_VERSION)
-
+print("v" .. getgenv().AC_VERSION .. " | Ascend | Ascending from hell...")
 repeat
   wait()
 until game:IsLoaded() and game.Players.LocalPlayer
+
+print("v" .. getgenv().AC_VERSION .. " | Ascend | Game loaded.")
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex
@@ -35,6 +36,10 @@ local oldNamecall = gmt.__namecall
 local playing = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 if game.GameId == 113491250 then
   playing = "Phantom Forces"
+else
+  if game.GameId == 2619619496 then
+    playing = "Bedwars"
+  end
 end
 
 -- [ Developer Mode ] --
@@ -54,11 +59,13 @@ local Camera = workspace.CurrentCamera
 local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local Noclip = nil
 local Clip = nil
-local player = Players.LocalPlayer
+local player = game:GetService("Players").LocalPlayer
 if playing ~= "Phantom Forces" then
-  local walkspeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
-  local jumppower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
-  local hipheight = game.Players.LocalPlayer.Character.Humanoid.HipHeight
+  local character = player.Character
+  local humanoid = character.Humanoid
+  local walkspeed = humanoid.WalkSpeed
+  local jumppower = humanoid.JumpPower
+  local hipheight = humanoid.HipHeight
 end
 
 -- [ Instances ] --
@@ -77,9 +84,6 @@ FOVCircle.Thickness = AimbotSettings.CircleThickness
 
 -- [ Events ] --
 RunService.RenderStepped:Connect(function()
-  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
-  game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumppower
-
   FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
   FOVCircle.Radius = AimbotSettings.CircleRadius
   FOVCircle.Filled = AimbotSettings.CircleFilled
@@ -193,7 +197,7 @@ Base:Button{
   Description = "Open Dex Explorer",
   Callback = function()
     if darkMode then
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/functions/darkdex.lua"))()
+      loadstring(game:GetObjects('rbxassetid://2180084478')[1].Source)()
     else
       loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
     end
@@ -257,11 +261,11 @@ if playing ~= "Phantom Forces" then
   Local:Slider{
     Name = "WalkSpeed",
     Description = "Changes your walkspeed",
-    Default = 16,
+    Default = walkspeed,
     Min = 16,
     Max = 500,
     Callback = function(value)
-      player.Character.Humanoid.WalkSpeed = value
+      humanoid.WalkSpeed = value
       walkspeed = value
     end
   }
@@ -272,7 +276,7 @@ if playing ~= "Phantom Forces" then
     Min = 20,
     Max = 500,
     Callback = function(value)
-      player.Character.Humanoid.JumpPower = value
+      humanoid.JumpPower = value
       jumppower = value
     end
   }
@@ -283,7 +287,7 @@ if playing ~= "Phantom Forces" then
     Min = 2,
     Max = 300,
     Callback = function(value)
-      player.Character.Humanoid.HipHeight = value
+      humanoid.HipHeight = value
       hipheight = value
     end
   }
@@ -333,6 +337,12 @@ if playing == "Phantom Forces" then
   local start = nil
   local handled = false
 
+  GUI:Notification{
+    Title = "Ascend",
+    Text = "Ascend hates StyLiS, they mess up their 'game' too much, some local features are not supported.",
+    Duration = 5
+  }
+
   GUI:prompt{
     Title = "Phantom Forces",
     Text = "You are playing Phantom Forces, would you like to enable Ascend's Phantom Forces Script?",
@@ -380,5 +390,21 @@ if playing == "Phantom Forces" then
         end
       end
     end
+  }
+end
+if playing == "Bedwars" then
+  GUI:prompt{
+    Title = "Bedwars",
+    Text = "You are playing Bedwars, would you like to enable the recommended game scripts?",
+    Followup = false,
+    Buttons = {
+      yes = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua",
+          true))()
+      end,
+      no = function()
+
+      end
+    }
   }
 end

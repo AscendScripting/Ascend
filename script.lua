@@ -1,18 +1,21 @@
 -- [ Ascend ] --
--- [ v1.0.2 ] --
-getgenv().AC_VERSION = "1.0.3-Alpha"
-local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/AscendUI/main/script.lua"))()
-
+-- [ v1.0.4-Alpha ] --
+if not getgenv().AC_VERSION then
+  getgenv().AC_VERSION = "1.0.4-Alpha"
+end
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Ascending from hell...")
+
+-- [ Game Load ] --
 repeat
   wait()
 until game:IsLoaded() and game.Players.LocalPlayer
-
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Game loaded.")
+
+-- [ Library ] --
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/AscendUI/main/script.lua"))()
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex
-local devMode = false
 local AimbotSettings = {
   Enabled = false,
   TeamCheck = false,
@@ -42,11 +45,6 @@ else
   end
 end
 
--- [ Developer Mode ] --
-if getgenv().AC_DEV then
-  devMode = true
-end
-
 -- [ Services ] --
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -68,37 +66,35 @@ if playing ~= "Phantom Forces" then
   local hipheight = humanoid.HipHeight
 end
 
--- [ Instances ] --
-local FOVCircle = Drawing.new("Circle")
-
 -- [ FOV Circle ] --
-FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-FOVCircle.Radius = AimbotSettings.CircleRadius
-FOVCircle.Filled = AimbotSettings.CircleFilled
-FOVCircle.Color = AimbotSettings.CircleColor
-FOVCircle.Visible = AimbotSettings.CircleVisible
-FOVCircle.Radius = AimbotSettings.CircleRadius
-FOVCircle.Transparency = AimbotSettings.CircleTransparency
-FOVCircle.NumSides = AimbotSettings.CircleSides
-FOVCircle.Thickness = AimbotSettings.CircleThickness
+getgenv().AC_FOVCircle = Drawing.new("Circle")
+getgenv().AC_FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+getgenv().AC_FOVCircle.Radius = AimbotSettings.CircleRadius
+getgenv().AC_FOVCircle.Filled = AimbotSettings.CircleFilled
+getgenv().AC_FOVCircle.Color = AimbotSettings.CircleColor
+getgenv().AC_FOVCircle.Visible = AimbotSettings.CircleVisible
+getgenv().AC_FOVCircle.Radius = AimbotSettings.CircleRadius
+getgenv().AC_FOVCircle.Transparency = AimbotSettings.CircleTransparency
+getgenv().AC_FOVCircle.NumSides = AimbotSettings.CircleSides
+getgenv().AC_FOVCircle.Thickness = AimbotSettings.CircleThickness
 
 -- [ Events ] --
 RunService.RenderStepped:Connect(function()
-  FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
-  FOVCircle.Radius = AimbotSettings.CircleRadius
-  FOVCircle.Filled = AimbotSettings.CircleFilled
-  FOVCircle.Color = AimbotSettings.CircleColor
-  FOVCircle.Visible = AimbotSettings.CircleVisible
-  FOVCircle.Radius = AimbotSettings.CircleRadius
-  FOVCircle.Transparency = AimbotSettings.CircleTransparency
-  FOVCircle.NumSides = AimbotSettings.CircleSides
-  FOVCircle.Thickness = AimbotSettings.CircleThickness
+  getgenv().AC_FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X,
+    UserInputService:GetMouseLocation().Y)
+  getgenv().AC_FOVCircle.Radius = AimbotSettings.CircleRadius
+  getgenv().AC_FOVCircle.Filled = AimbotSettings.CircleFilled
+  getgenv().AC_FOVCircle.Color = AimbotSettings.CircleColor
+  getgenv().AC_FOVCircle.Visible = AimbotSettings.CircleVisible
+  getgenv().AC_FOVCircle.Radius = AimbotSettings.CircleRadius
+  getgenv().AC_FOVCircle.Transparency = AimbotSettings.CircleTransparency
+  getgenv().AC_FOVCircle.NumSides = AimbotSettings.CircleSides
+  getgenv().AC_FOVCircle.Thickness = AimbotSettings.CircleThickness
+
+  getgenv().AC_AIMBOT = AimbotSettings
 end)
 
 -- [ Functions ] --
-local hop =
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/functions/hop.lua"))()
-
 function noclip()
   Clip = false
   local function Nocl()
@@ -121,6 +117,9 @@ function clip()
   Clip = true
 end
 
+-- [ Modules ] --
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/mod/aimbot.lua"))()
+
 -- [ Main ] --
 local GUI = Lib:Create{
   Name = "Ascend",
@@ -130,7 +129,7 @@ local GUI = Lib:Create{
 }
 getgenv().AC_GUI = GUI
 
-if devMode then
+if getgenv().AC_DEV then
   GUI:Notification{
     Title = "Developer",
     Text = "You are currently in developer mode, some features may not work as expected.",
@@ -147,15 +146,15 @@ end
 -- [ Tabs ] --
 local Base = GUI:Tab{
   Name = "Base",
-  Icon = "rbxassetid://8569322"
+  Icon = "rbxassetid://18913670566"
 }
 local Local = GUI:Tab{
   Name = "Local",
-  Icon = "rbxassetid://8569322"
+  Icon = "rbxassetid://18913665617"
 }
 local Combat = GUI:Tab{
   Name = "Combat",
-  Icon = "rbxassetid://8569322"
+  Icon = "rbxassetid://18913667987"
 }
 
 -- [ Base Tab ] --
@@ -252,7 +251,8 @@ Local:Button{
       Text = "Serverhopping.",
       Duration = 2,
       Callback = function()
-        hop:Teleport(game.PlaceId)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/functions/hop.lua"))():Teleport(
+          game.PlaceId)
       end
     }
   end
@@ -316,19 +316,118 @@ Local:Slider{
 }
 
 -- [ Combat Tab ] --
-Combat:Button{
-  Name = "Homohack",
-  Description = "Homohack, a powerful script for Bad Business, Rivals, and PF.",
-  Callback = function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
-  end
-}
 Combat:Toggle{
   Name = "Aimbot",
   Description = "Aims at the closest player with your mouse",
   StartingState = false,
   Callback = function(state)
-    AimbotSettings.Enabled = state
+    if playing == "Phantom Forces" then
+      GUI:prompt{
+        Title = "Aimbot",
+        Text = "Aimbot could get you banned, proceed?",
+        Followup = false,
+        Buttons = {
+          yes = function()
+            AimbotSettings.Enabled = state
+          end,
+          no = function()
+            AimbotSettings.Enabled = false
+          end
+        }
+      }
+    else
+      AimbotSettings.Enabled = state
+    end
+  end
+}
+Combat:Dropdown{
+  Name = "Aim Part",
+  Description = "Changes the part the aimbot aims at",
+  StartingText = "Select one.",
+  Items = {"Head", "Torso"},
+  Callback = function(value)
+    AimbotSettings.AimPart = value
+  end
+}
+Combat:Toggle{
+  Name = "Team Check",
+  Description = "Only aim at enemies",
+  StartingState = false,
+  Callback = function(state)
+    AimbotSettings.TeamCheck = state
+  end
+}
+Combat:Slider{
+  Name = "Sensitivity",
+  Description = "Changes the sensitivity of the aimbot",
+  Default = 0,
+  Min = 0,
+  Max = 10,
+  Callback = function(value)
+    AimbotSettings.Sensitivity = value
+  end
+}
+Combat:Slider{
+  Name = "FOV Sides",
+  Description = "Changes the sides of the FOV Circle",
+  Default = 64,
+  Min = 4,
+  Max = 256,
+  Callback = function(value)
+    AimbotSettings.Sensitivity = value
+  end
+}
+Combat:Slider{
+  Name = "Transparency",
+  Description = "Changes the transparency of the FOV Circle",
+  Default = 0.5,
+  Min = 0,
+  Max = 1,
+  Callback = function(value)
+    AimbotSettings.CircleTransparency = value
+  end
+}
+Combat:Slider{
+  Name = "Radius",
+  Description = "Changes the radius of the FOV Circle",
+  Default = 120,
+  Min = 50,
+  Max = 500,
+  Callback = function(value)
+    AimbotSettings.CircleRadius = value
+  end
+}
+Combat:Toggle{
+  Name = "Filled",
+  Description = "Fills the FOV Circle",
+  StartingState = false,
+  Callback = function(state)
+    AimbotSettings.CircleFilled = state
+  end
+}
+Combat:Toggle{
+  Name = "Visible",
+  Description = "Makes the FOV Circle visible",
+  StartingState = false,
+  Callback = function(state)
+    AimbotSettings.CircleVisible = state
+  end
+}
+Combat:Slider{
+  Name = "Thickness",
+  Description = "Changes the thickness of the FOV Circle",
+  Default = 1,
+  Min = 1,
+  Max = 10,
+  Callback = function(value)
+    AimbotSettings.CircleThickness = value
+  end
+}
+Combat:Button{
+  Name = "Homohack",
+  Description = "Homohack, a powerful script for Bad Business, Rivals, and PF.",
+  Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
   end
 }
 

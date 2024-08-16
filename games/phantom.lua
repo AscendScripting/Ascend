@@ -1,10 +1,18 @@
 -- Thanks to dementiaenjoyer for the Homohack script.
 -- [ Variables / Services ] --
 getgenv().AC_PHANTOMLOADED = true
-local players = workspace.Players
-local run_service = game:GetService("RunService")
-local teams = game:GetService("Teams")
-local plr_service = game:GetService("Players")
+-- [ Services ] --
+local Players = workspace.Players
+local PlayersService = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local Teams = game:GetService("Teams")
+
+-- [ Variables ] --
+local Holding = nil
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
 
 -- [ Tables ] --
 local features = {
@@ -22,10 +30,10 @@ local features = {
 }
 
 -- [ Functions ] --
-function get_players()
+function get_Players()
   local entity_list = {}
-  for _, teams in players:GetChildren() do
-    for _, player in teams:GetChildren() do
+  for _, Teams in Players:GetChildren() do
+    for _, player in Teams:GetChildren() do
       if player:IsA("Model") then
         entity_list[#entity_list + 1] = player
       end
@@ -46,16 +54,16 @@ function is_ally(player)
   end
 
   if helmet.BrickColor == BrickColor.new("Black") then
-    return teams.Phantoms == plr_service.LocalPlayer.Team, teams.Phantoms
+    return Teams.Phantoms == PlayersService.LocalPlayer.Team, Teams.Phantoms
   end
 
-  return teams.Ghosts == plr_service.LocalPlayer.Team, teams.Ghosts
+  return Teams.Ghosts == PlayersService.LocalPlayer.Team, Teams.Ghosts
 end
 
 -- [ Logic ] --
-run_service.RenderStepped:Connect(function(delta)
+RunService.RenderStepped:Connect(function(delta)
   if getgenv().AC_PHANTOMESP then
-    for _, player in get_players() do
+    for _, player in get_Players() do
       if not player:FindFirstChildWhichIsA("Highlight") then
         local is_ally, team = is_ally(player)
 
@@ -70,3 +78,22 @@ run_service.RenderStepped:Connect(function(delta)
     end
   end
 end)
+
+-- [ Phantom Forces Aimbot ] --
+local settings = getgenv().AC_AIMBOT
+-- {
+--   Enabled = false,
+--   TeamCheck = false,
+--   AimPart = "Torso",
+--   Sensitivity = 0,
+--   CircleSides = 64,
+--   CircleColor = Color3.fromRGB(255, 255, 255),
+--   CircleTransparency = 0.5,
+--   CircleRadius = 120,
+--   CircleFilled = false,
+--   CircleVisible = false,
+--   CircleThickness = 1
+-- }
+
+-- [ Get Closest Player ] --
+-- WIP.

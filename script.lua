@@ -1,7 +1,7 @@
 -- [ Ascend ] --
--- [ v1.0.4-Alpha ] --
+-- [ v1.0.5-Alpha ] --
 if not getgenv().AC_VERSION then
-  getgenv().AC_VERSION = "1.0.4-Alpha"
+  getgenv().AC_VERSION = "1.0.5-Alpha"
 end
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Ascending from hell...")
 
@@ -11,8 +11,10 @@ repeat
 until game:IsLoaded() and game.Players.LocalPlayer
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Game loaded.")
 
--- [ Library ] --
+-- [ GUI library ] --
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/AscendUI/main/script.lua"))()
+local RGUI =
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/functions/rgui.lua"))()
 
 -- [ Configuration ] --
 local darkMode = true -- eg Dex vs DarKdex

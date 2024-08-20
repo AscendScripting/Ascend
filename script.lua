@@ -1,5 +1,5 @@
 -- [ Ascend ] --
--- [ v1.0.7-Alpha ] --
+-- [ v1.0.8-Alpha ] --
 if not getgenv().AC_VERSION then
   getgenv().AC_VERSION = "1.0.6-Alpha"
 end
@@ -144,6 +144,20 @@ else
     Duration = 10
   }
 end
+
+-- [ Default Modifications ] --
+getgenv().AC_SETTINGSTAB:Keybind{
+  Name = "Toggle RGUI",
+  Description = "Key to show/hide RGUI.",
+  Keybind = Enum.KeyCode.RightAlt,
+  Callback = function()
+    for i, v in pairs(game.Players.LocalPlayer:WaitForChild("PlayerGui"):GetChildren()) do
+      if v.Name == getgenv().AC_RGUI then
+        v.Frame.Visible = not v.Frame.Visible
+      end
+    end
+  end
+}
 
 -- [ Tabs ] --
 local Base = GUI:Tab{

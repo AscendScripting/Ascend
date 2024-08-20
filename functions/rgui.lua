@@ -1,7 +1,7 @@
 -- [ Athena-RGUI ] --
 -- [ v1.0.0 ] --
 -- [ Services ] --
-local HttpService = game:GetService("HttpService")
+local HTTPService = game:GetService("HttpService")
 
 -- [ Instances ] --
 
@@ -34,8 +34,8 @@ local TextLabel_8 = Instance.new("TextLabel")
 
 -- [ Setup ] --
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("ScreenGui")
-ScreenGui.Name = HttpService:GenerateGUID(false)
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = HTTPService:GenerateGUID(false)
 getgenv().AC_RGUI = ScreenGui.Name
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 

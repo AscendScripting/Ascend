@@ -32,9 +32,9 @@ local TextLabel_8 = Instance.new("TextLabel")
 
 -- [ Setup ] --
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("ScreenGui")
 ScreenGui.Name = HTTPService:GenerateGUID(false)
-getgenv().AC_RGUI = ScreenGui
+getgenv().AC_RGUI = ScreenGui.Name
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = ScreenGui

@@ -175,7 +175,11 @@ Base:Button{
             getgenv().AC_GUI = nil
           end
         end
-        getgenv().AC_RGUI:Destroy()
+        for i, v in pairs(game.Players.LocalPlayer:WaitForChild("PlayerGui"):GetChildren()) do
+          if v.Name == getgenv().AC_RGUI then
+            v:Destroy()
+          end
+        end
       end
     }
   end

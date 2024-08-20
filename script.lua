@@ -51,6 +51,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
 local CoreGUI = game.CoreGui
 local Camera = workspace.CurrentCamera
 
@@ -174,6 +175,7 @@ Base:Button{
             getgenv().AC_GUI = nil
           end
         end
+        getgenv().AC_RGUI:Destroy()
       end
     }
   end

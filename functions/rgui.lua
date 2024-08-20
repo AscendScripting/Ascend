@@ -1,4 +1,8 @@
+-- [ Services ] --
+local HttpService = game:GetService("HttpService")
+
 -- [ Instances ] --
+
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
@@ -29,6 +33,8 @@ local TextLabel_8 = Instance.new("TextLabel")
 -- [ Setup ] --
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = HTTPService:GenerateGUID(false)
+getgenv().AC_RGUI = ScreenGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = ScreenGui

@@ -1,7 +1,7 @@
 -- [ Ascend ] --
--- [ v1.0.5-Alpha ] --
+-- [ v1.0.6-Alpha ] --
 if not getgenv().AC_VERSION then
-  getgenv().AC_VERSION = "1.0.5-Alpha"
+  getgenv().AC_VERSION = "1.0.6-Alpha"
 end
 print("v" .. getgenv().AC_VERSION .. " | Ascend | Ascending from hell...")
 
@@ -17,7 +17,6 @@ local RGUI =
   loadstring(game:HttpGet("https://raw.githubusercontent.com/AscendScripting/Ascend/main/functions/rgui.lua"))()
 
 -- [ Configuration ] --
-local darkMode = true -- eg Dex vs DarKdex
 local AimbotSettings = {
   Enabled = false,
   TeamCheck = false,
@@ -161,20 +160,6 @@ local Combat = GUI:Tab{
 
 -- [ Base Tab ] --
 Base:Button{
-  Name = "Light mode",
-  Description = "Switch to light mode",
-  Callback = function()
-    GUI:Notification{
-      Title = "Ascend",
-      Text = "Switching to light mode.",
-      Duration = 5,
-      Callback = function()
-        darkMode = false
-      end
-    }
-  end
-}
-Base:Button{
   Name = "Destroy",
   Description = "Destroy Ascend",
   Callback = function()
@@ -197,11 +182,7 @@ Base:Button{
   Name = "Dex",
   Description = "Open Dex Explorer",
   Callback = function()
-    if darkMode then
-      loadstring(game:GetObjects('rbxassetid://2180084478')[1].Source)()
-    else
-      loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
-    end
+    loadstring(game:GetObjects('rbxassetid://2180084478')[1].Source)()
   end
 }
 Base:Button{

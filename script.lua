@@ -1,5 +1,5 @@
 -- [ Ascend ] --
--- [ v1.0.6-Alpha ] --
+-- [ v1.0.7-Alpha ] --
 if not getgenv().AC_VERSION then
   getgenv().AC_VERSION = "1.0.6-Alpha"
 end

@@ -1,11 +1,11 @@
 # Ascend
 
-The keyless script hub we have all been looking for.
+The keyless roblox script hub we have all been looking for. This project was developed for educational purposes only. The developers do not encourage or condone cheating.
 
 ### Developers
 
-- Thinking Curved, **Developer**, `thinking_curved`, 881922017887154226, **Private Github**
 - Rafael S.R., **Developer**, `thinking_real`, 1261719316747911211, [**rsley**](https://github.com/rsley)
+- Thinking Curved, **Developer**, `thinking_curved`, 881922017887154226, **Private Github**
 
 ### Features
 
